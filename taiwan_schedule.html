@@ -1,0 +1,620 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>台湾3泊4日 究極の大人旅スケジュール</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Shippori+Mincho:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <style>
+        body { font-family: 'Noto Sans JP', sans-serif; background-color: #F9F7F2; color: #1A1A1A; }
+        .serif { font-family: 'Shippori Mincho', serif; }
+        .spot-details { max-height: 0; overflow: hidden; transition: all 0.3s ease-out; opacity: 0; }
+        .spot-card.active .spot-details { max-height: 1200px; opacity: 1; margin-top: 1rem; }
+        .spot-card.active .arrow { transform: rotate(180deg); }
+        .timeline-dot { position: absolute; left: -26px; width: 14px; height: 14px; border-radius: 50%; background: #A62C2B; border: 2px solid #FFF; top: 4px; }
+        .hotel-dot { background: #C5A059; }
+        .prep-details { max-height: 0; overflow: hidden; transition: all 0.3s ease-out; opacity: 0; }
+        .prep-card.active .prep-details { max-height: 2000px; opacity: 1; }
+        .prep-card.active .prep-arrow { transform: rotate(180deg); }
+        .spot-card.current-spot > div:first-of-type + div,
+        .spot-card.current-spot > .flex {
+            border-color: #A62C2B !important;
+            box-shadow: 0 0 0 2px rgba(166, 44, 43, 0.25);
+        }
+        .spot-card.current-spot::before {
+            content: "現在";
+            position: absolute;
+            top: -10px;
+            left: 8px;
+            background: #A62C2B;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 9999px;
+            z-index: 5;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        .ai-image {
+            background: #f3f4f6;
+            border-radius: 0.5rem;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            height: auto;
+            object-fit: contain;
+            object-position: center;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 mb-20">
+    <div class="max-w-2xl mx-auto">
+        <header class="mb-10 border-b-2 border-[#A62C2B] pb-6">
+            <h1 class="text-3xl font-bold serif mb-2 text-[#A62C2B]">台湾3泊4日 完全行程表</h1>
+            <p class="text-gray-500 text-sm">高雄・台南・台北を巡る美食と文化の旅</p>
+        </header>
+
+        <section class="mb-10">
+            <div class="prep-card cursor-pointer bg-white border border-gray-200 rounded-lg shadow-sm" onclick="this.classList.toggle('active')">
+                <div class="flex items-center justify-between p-4">
+                    <h2 class="font-bold text-base text-[#A62C2B]">🧳 旅の準備</h2>
+                    <span class="text-gray-400 text-xs prep-arrow transition-transform">▼</span>
+                </div>
+                <div class="prep-details px-4 pb-4 text-sm text-gray-700 leading-relaxed">
+                    <ul class="space-y-3 list-disc pl-5">
+                        <li>
+                            <span class="font-bold">台湾のWEB入国カード</span><br>
+                            5/13〜5/15に登録可能。往路の便名は <span class="font-bold">GK017（ジェットスター）</span>。滞在ホテルは「金石ホテル」。<br>
+                            <a href="https://twac.immigration.gov.tw/" target="_blank" class="text-[#A62C2B] hover:underline break-all">https://twac.immigration.gov.tw/</a>
+                        </li>
+                        <li>
+                            <span class="font-bold">日本帰国時の税関申告Web (Visit Japan Web)</span><br>
+                            出発前に帰国予定を登録しておくと便利。帰国便は <span class="font-bold">TR874（スクート）</span>。<br>
+                            <a href="https://services.digital.go.jp/visit-japan-web/" target="_blank" class="text-[#A62C2B] hover:underline break-all">https://services.digital.go.jp/visit-japan-web/</a>
+                        </li>
+                        <li>
+                            <span class="font-bold">海外SIM</span><br>
+                            ahamoや楽天モバイルなど、海外でそのまま使えるキャリアなら準備不要。<br>
+                            参考:
+                            <a href="https://www.amazon.co.jp/gp/product/B0FN3WBJKP/ref=ox_sc_act_title_1?smid=A28BUVK8US733C&th=1" target="_blank" class="text-[#A62C2B] hover:underline break-all">Amazonの台湾SIM例</a><br>
+                            eSIM対応機種なら、もっと安い選択肢もあり。
+                        </li>
+                        <li>
+                            <span class="font-bold">スーツケースは機内持ち込みサイズで</span><br>
+                            縦＋横＋高さが <span class="font-bold">115cm以内</span>。加えて小さい手荷物1個まで持ち込み可能。
+                        </li>
+                        <li>
+                            <span class="font-bold">パスポートを忘れずに！</span>
+                        </li>
+                        <li>
+                            <span class="font-bold">気温・服装</span><br>
+                            昼間は暑く、夜は羽織るものが必要になるぐらいとのこと。重くならない範囲で準備。
+                        </li>
+                        <li>
+                            <span class="font-bold">現金</span><br>
+                            空港でのATMキャッシングが最も良いらしい。<br>
+                            ただし銀行ごと・ATMごとに手数料や利率が変わる点は海外あるあるなので注意。
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <div class="mb-6 flex justify-end">
+            <button type="button" id="jump-to-now"
+                    class="px-4 py-2 rounded-full bg-[#A62C2B] text-white text-sm font-bold shadow hover:bg-[#871f1e] transition-colors">
+                現在のスケジュールへジャンプ ⏱
+            </button>
+        </div>
+
+        <div id="itinerary-container" class="space-y-12"></div>
+
+        <section class="mt-12" id="budget-summary">
+            <h2 class="text-xl font-bold text-[#A62C2B] mb-2">旅行中の予算目安（1人あたり）</h2>
+            <p class="text-sm text-gray-600 mb-4">レストラン・観光スポットの現地支払い目安です。航空券・宿泊・新幹線（事前会計）と、市内交通・タクシー・ドリンク・お土産代は別途。</p>
+            <div id="budget-summary-content" class="bg-white border border-gray-200 rounded-lg shadow-sm p-4 text-sm text-gray-800"></div>
+        </section>
+
+        <section class="mt-12 pt-10 border-t-2 border-[#A62C2B]" id="prepayment">
+            <h2 class="text-xl font-bold text-[#A62C2B] mb-2">事前会計</h2>
+            <div class="overflow-x-auto rounded-lg border border-gray-200 shadow-sm">
+                <table class="w-full text-sm border-collapse min-w-[520px]">
+                    <thead>
+                        <tr class="bg-gray-100 text-gray-800">
+                            <th class="border border-gray-200 px-3 py-2 text-left font-bold">項目</th>
+                            <th class="border border-gray-200 px-3 py-2 text-left font-bold">費用</th>
+                            <th class="border border-gray-200 px-3 py-2 text-right font-bold whitespace-nowrap">全員分の合計</th>
+                            <th class="border border-gray-200 px-3 py-2 text-right font-bold whitespace-nowrap">竹内さん</th>
+                            <th class="border border-gray-200 px-3 py-2 text-right font-bold whitespace-nowrap">その他みんな</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white text-gray-700">
+                        <tr>
+                            <td class="border border-gray-200 px-3 py-2 align-top font-medium">飛行機</td>
+                            <td class="border border-gray-200 px-3 py-2 align-top whitespace-pre-line">運賃：34530×5
+税金・サーチャージ：5680×5
+割引：-2550</td>
+                            <td class="border border-gray-200 px-3 py-2 text-right align-top tabular-nums">198,500</td>
+                            <td class="border border-gray-200 px-3 py-2 text-right align-top tabular-nums">39,700</td>
+                            <td class="border border-gray-200 px-3 py-2 text-right align-top tabular-nums">39,700</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-200 px-3 py-2 align-top font-medium whitespace-pre-line">高雄宿泊
+金石ホテル</td>
+                            <td class="border border-gray-200 px-3 py-2 align-top whitespace-pre-line">一人部屋：3804
+二人部屋：4943×2</td>
+                            <td class="border border-gray-200 px-3 py-2 text-right align-top tabular-nums">13,690</td>
+                            <td class="border border-gray-200 px-3 py-2 text-right align-top tabular-nums">3,804</td>
+                            <td class="border border-gray-200 px-3 py-2 text-right align-top tabular-nums">2,472</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-200 px-3 py-2 align-top font-medium whitespace-pre-line">台南宿泊
+GALA INN</td>
+                            <td class="border border-gray-200 px-3 py-2 align-top whitespace-pre-line">一人部屋：10254
+二人部屋：10812×2</td>
+                            <td class="border border-gray-200 px-3 py-2 text-right align-top tabular-nums">31,878</td>
+                            <td class="border border-gray-200 px-3 py-2 text-right align-top tabular-nums">10,254</td>
+                            <td class="border border-gray-200 px-3 py-2 text-right align-top tabular-nums">5,406</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-200 px-3 py-2 align-top font-medium whitespace-pre-line">台北宿泊
+Water Meworld</td>
+                            <td class="border border-gray-200 px-3 py-2 align-top whitespace-pre-line">一人部屋：10269
+二人部屋：7530×2</td>
+                            <td class="border border-gray-200 px-3 py-2 text-right align-top tabular-nums">25,329</td>
+                            <td class="border border-gray-200 px-3 py-2 text-right align-top tabular-nums">10,269</td>
+                            <td class="border border-gray-200 px-3 py-2 text-right align-top tabular-nums">3,765</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-200 px-3 py-2 align-top font-medium whitespace-pre-line">新幹線
+台南〜台北</td>
+                            <td class="border border-gray-200 px-3 py-2 align-top">5679×5</td>
+                            <td class="border border-gray-200 px-3 py-2 text-right align-top tabular-nums">28,395</td>
+                            <td class="border border-gray-200 px-3 py-2 text-right align-top tabular-nums">5,679</td>
+                            <td class="border border-gray-200 px-3 py-2 text-right align-top tabular-nums">5,679</td>
+                        </tr>
+                        <tr class="bg-[#FFF5F5] font-bold text-gray-900">
+                            <td class="border border-gray-200 px-3 py-2" colspan="2">合計</td>
+                            <td class="border border-gray-200 px-3 py-2 text-right tabular-nums">297,792</td>
+                            <td class="border border-gray-200 px-3 py-2 text-right tabular-nums">69,706</td>
+                            <td class="border border-gray-200 px-3 py-2 text-right tabular-nums">57,022</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const cityCenters = {
+            "高雄": { lat: 22.6273, lng: 120.3014, zoom: 12 },
+            "台南": { lat: 22.9999, lng: 120.2269, zoom: 12 },
+            "台北": { lat: 25.0330, lng: 121.5654, zoom: 12 },
+            "桃園": { lat: 25.0126, lng: 121.3009, zoom: 11 }
+        };
+        const spotCoordinates = {
+            "高雄国際空港": { lat: 22.5771, lng: 120.3497 },
+            "金石大飯店": { lat: 22.6312, lng: 120.3018 },
+            "龍虎塔": { lat: 22.6781, lng: 120.2953 },
+            "駁二芸術特区": { lat: 22.6201, lng: 120.2816 },
+            "港園牛肉麺": { lat: 22.6254, lng: 120.2845 },
+            "YONSHIN FUDOPIA": { lat: 22.6161, lng: 120.2825 },
+            "興隆居": { lat: 22.6319, lng: 120.2949 },
+            "高雄駅": { lat: 22.6396, lng: 120.3028 },
+            "Pier No.1": { lat: 22.6122, lng: 120.3005 },
+            "GALA INN": { lat: 22.9978, lng: 120.2123 },
+            "阿霞飯店": { lat: 22.9955, lng: 120.2046 },
+            "林百貨": { lat: 22.9929, lng: 120.2043 },
+            "神農街": { lat: 22.9969, lng: 120.1966 },
+            "花園夜市": { lat: 23.0099, lng: 120.1987 },
+            "王氏魚皮店": { lat: 22.9993, lng: 120.1619 },
+            "安平老街": { lat: 23.0006, lng: 120.1603 },
+            "安平樹屋": { lat: 23.0004, lng: 120.1595 },
+            "文章牛肉湯": { lat: 23.0013, lng: 120.1611 },
+            "高鉄台南駅": { lat: 22.9248, lng: 120.2862 },
+            "台南駅": { lat: 22.9971, lng: 120.2128 },
+            "沙崙駅": { lat: 22.9244, lng: 120.2877 },
+            "台北駅": { lat: 25.0478, lng: 121.5170 },
+            "Water Meworld": { lat: 25.0451, lng: 121.5167 },
+            "双月食品社 済南店": { lat: 25.0425, lng: 121.5278 },
+            "林華泰茶行": { lat: 25.0564, lng: 121.5134 },
+            "迪化街": { lat: 25.0560, lng: 121.5100 },
+            "阿城鵝肉 吉林店": { lat: 25.0592, lng: 121.5308 },
+            "香満園": { lat: 25.0576, lng: 121.5202 },
+            "赤峰街": { lat: 25.0547, lng: 121.5196 },
+            "Kavalan Whisky Bar": { lat: 25.0515, lng: 121.5208 },
+            "神農生活 誠品生活南西店": { lat: 25.0522, lng: 121.5191 },
+            "桃園国際空港": { lat: 25.0797, lng: 121.2342 }
+        };
+
+        const days = [
+            {
+                date: "Day 1: 5/15 (金) 高雄",
+                spots: [
+                    { time: "13:00", name: "高雄国際空港(KHH) 到着", type: "transport", desc: "台湾南部へのゲートウェイ。入国後、MRTで市内へ移動します。", img: "images/kaohsiung_airport.jpg", map: "高雄国際空港" },
+                    { time: "14:15", name: "金石ホテル (荷物預け)", type: "hotel", desc: "美麗島駅近くの便利な立地。まずは荷物を預けて身軽に観光をスタート。", img: "images/jinshi_hotel.png", map: "金石大飯店" },
+                    { time: "15:30", name: "龍虎塔 (蓮池潭)", type: "spot", desc: "蓮池潭を象徴する高雄屈指の名所。龍口から入り虎口から出る参拝作法が有名で、鮮やかな造形と湖畔の景観を同時に楽しめる開運スポットです。", img: "images/dragon_tiger_pagodas.jpg", map: "龍虎塔", mapUrl: "https://maps.app.goo.gl/tBFuF7bQDLtKMcTp8", budget: "無料 (お布施任意)", budgetMin: 0, budgetMax: 0 },
+                    { time: "17:30", name: "駁二芸術特区", type: "spot", desc: "港湾倉庫を再生した高雄の文化発信地。大型アート、ギャラリー、雑貨店、カフェが点在し、海風を感じながら写真映えする散策ができます。", img: "images/pier2_art_center.jpg", map: "駁二芸術特区", mapUrl: "https://maps.app.goo.gl/n9DrTXX1v1yi29uKA", budget: "散策無料（一部展示は有料）", budgetMin: 0, budgetMax: 0 },
+                    { time: "19:00", name: "YONSHIN FUDOPIA (永心浮島)", type: "spot", desc: "高雄港を望む話題のダイニング。洗練された内装と夕景が魅力で、台式アレンジ料理や軽いタパスとお酒を気分よく楽しめる雰囲気の良い一軒です。", img: "images/yonshin_fudopia.jpg", map: "YONSHIN FUDOPIA", budget: "600〜1,000元", budgetMin: 600, budgetMax: 1000 },
+                    { time: "20:30", name: "港園牛肉麺", type: "spot", desc: "地元客にも観光客にも支持される老舗牛肉麺店。旨味の強い汁なし麺はコシある麺と相性抜群で、薬味で味変しながら最後まで飽きずに味わえます。親族がのれん分けした店が近くにあるため、混雑時はそちらへ回る想定です。", img: "images/gangyuan_beef_noodle.jpg", map: "港園牛肉麺", mapUrl: "https://maps.app.goo.gl/pmWuEeLxRVfMEC9K7", budget: "120〜150元", budgetMin: 120, budgetMax: 150 },
+                    { time: "22:00", name: "Pier No.1", type: "spot", desc: "開放感のあるルーフトップバー。夜風に当たりながら高雄の街明かりを一望でき、旅の高揚感をそのままにカクテルやクラフトドリンクを楽しめます。", img: "images/pier_no1.jpg", map: "Pier No.1", budget: "400〜700元", budgetMin: 400, budgetMax: 700 },
+                    { time: "23:30", name: "ホテル帰館", type: "hotel", desc: "明日に備えてゆっくりと休息。金石ホテルにて就寝。", img: "images/jinshi_hotel.png", map: "金石大飯店" }
+                ]
+            },
+            {
+                date: "Day 2: 5/16 (土) 高雄〜台南",
+                spots: [
+                    { time: "08:00", name: "ホテル出発 (チェックアウト)", type: "hotel", desc: "荷物を預けて、朝食の名店へ向かいます。", img: "images/jinshi_hotel.png", map: "金石大飯店" },
+                    { time: "08:30", name: "興隆居 (高雄)", type: "spot", desc: "朝から行列ができる高雄の人気朝食店。看板の湯包は噛むと肉汁が広がり、厚みのある蛋餅や豆乳と合わせると台湾らしい朝の満足感を味わえます。かなり混雑する店のため、待ち時間次第では近隣の別店へ切り替える可能性があります。", img: "images/xinglongju.jpg", map: "興隆居", mapUrl: "https://maps.app.goo.gl/yydyiBB4EkF3BXHt7", budget: "50〜100元", budgetMin: 50, budgetMax: 100 },
+                    { time: "11:43", name: "高雄駅 出発", type: "transport", desc: "11:43 美麗島〜(MRT)〜高雄〜(自強號)〜台南 12:33着", img: "images/kaohsiung_station.jpg", map: "高雄駅", budget: "180元" },
+                    { time: "13:15", name: "GALA INN (台南・荷物預け)", type: "hotel", desc: "台南の拠点へチェックイン前に荷物を預けます。ここから台南美食巡りのスタート。", img: "images/gala_inn.jpg", map: "GALA INN" },
+                    { time: "14:00", name: "阿霞飯店", type: "spot", desc: "創業以来愛される台南名店で、祝いの席でも使われる格式ある老舗。名物の蟹おこわは香り高いもち米と蟹の旨味が重なり、訪問価値の高い逸品です。予約が取れなかったため、待ち時間が長い場合は近くの阿美飯店の様子を見て、早く入れそうな方へ向かいます。", img: "images/axia_restaurant.jpg", map: "阿霞飯店", mapUrl: "https://maps.app.goo.gl/Y7vcHmM4Ld47tiHAA", budget: "800〜1,200元", budgetMin: 800, budgetMax: 1200 },
+                    { time: "16:00", name: "林百貨", type: "spot", desc: "歴史建築を活用した台南のランドマーク。館内には台湾デザイン雑貨や食品、工芸品が揃い、最上階からの街並み眺望まで楽しめる見どころ豊富な百貨店です。", img: "images/hayashi_department_store.png", map: "林百貨", budget: "300元〜（お土産・カフェ次第）", budgetMin: 300, budgetMax: null },
+                    { time: "18:00", name: "神農街", type: "spot", desc: "古い町家と提灯の灯りが美しい人気散策エリア。夕方以降は雰囲気が一気に高まり、路地の小店やバーをのぞきながら台南らしい夜歩きが楽しめます。途中、街内のクラフトビール醸造所「沃隼醸造（Weasel Brewing）」に立ち寄り、台湾クラフトビールで一杯休憩する予定です。", img: "images/shennong_street.png", map: "神農街", budget: "200元（沃隼醸造でクラフトビール）", budgetMin: 200, budgetMax: 200 },
+                    { time: "20:00", name: "花園夜市", type: "spot", desc: "台南を代表する大規模夜市で、グルメ・ゲーム・雑貨が一度に楽しめる定番スポット。屋台ごとの個性も強く、食べ歩きだけでも十分満喫できます。", img: "images/hanazono_night_market.jpg", map: "花園夜市", budget: "200〜400元", budgetMin: 200, budgetMax: 400 },
+                    { time: "22:30", name: "ホテル帰館", type: "hotel", desc: "台南の静かな夜を楽しみながら、GALA INNにて休息。", img: "images/gala_inn.jpg", map: "GALA INN" }
+                ]
+            },
+            {
+                date: "Day 3: 5/17 (日) 台南〜台北",
+                spots: [
+                    { time: "08:00", name: "ホテル出発 (チェックアウト)", type: "hotel", desc: "荷物を預け、台南の「日常」を味わいに出かけます。", img: "images/gala_inn.jpg", map: "GALA INN" },
+                    { time: "08:30", name: "王氏魚皮店", type: "spot", desc: "台南で評判の魚皮スープ専門店。旨味のある澄んだスープとふっくらした魚皮、魯肉飯の組み合わせが朝食にぴったりで、地元客にも人気の一軒です。", img: "images/wangshi_fish_skin.jpg", map: "王氏魚皮店", mapUrl: "https://maps.app.goo.gl/Km1RDZkjru4M8oEd7", budget: "200〜300元", budgetMin: 200, budgetMax: 300 },
+                    { time: "09:30", name: "安平老街 & 安平樹屋", type: "spot", desc: "台南の歴史を感じる安平エリアを凝縮して楽しめる組み合わせ。レトロな街並み散策と、樹木が建物を包み込む安平樹屋の独特な景観が魅力です。", img: "images/anping_tree_house.jpg", map: "安平樹屋", budget: "50元（樹屋入場料）", budgetMin: 50, budgetMax: 50 },
+                    { time: "10:30", name: "文章牛肉湯", type: "spot", desc: "台南牛肉湯の有名店として知られ、朝の時間帯から活気ある一軒。澄んだスープとやわらかな牛肉のバランスが良く、シンプルながら印象に残る味です。", img: "images/wenzhang_beef_soup.jpg", map: "文章牛肉湯", mapUrl: "https://maps.app.goo.gl/hGAQaa6eCRGV6CTHA", budget: "150〜250元", budgetMin: 150, budgetMax: 250 },
+                    { time: "11:30", name: "荷物ピックアップ", type: "hotel", desc: "ホテルに戻り荷物を回収し、台南駅へ向かいます。", img: "images/gala_inn.jpg", map: "GALA INN" },
+                    { time: "12:03", name: "台南駅 出発 ～ 12:26 沙崙駅（Shalun）到着", type: "transport", desc: "台鉄にて新幹線への乗り継ぎ駅へ移動します。", img: "images/thsr_tainan_station.jpg", map: "沙崙駅", budget: "37元" },
+                    { time: "12:48", name: "高鉄台南駅 出発 ～ 14:33 台北駅 到着", type: "transport", desc: "新幹線（高鉄）で台北へ移動します。発券カウンターでは、オンライン予約の予約番号（Reservation No）などが必要です。", img: "images/thsr_tainan_station.jpg", map: "高鉄台南駅", ticketImage: "images/thsr_counter_booking.png" },
+                    { time: "15:00", name: "Water Meworld (台北・荷物預け)", type: "hotel", desc: "台北駅近くの宿に荷物を預けます。ここから台北の洗練された街歩きへ。", img: "images/water_meworld.jpg", map: "Water Meworld" },
+                    { time: "16:00", name: "双月食品社 (済南店)", type: "spot", desc: "ビブグルマン常連として知られる実力店。滋味深いスープと丁寧な味付けの麺・小菜が魅力で、旅の中盤に体を整える一食としても満足度が高いです。", img: "images/shuangyue_jinan.jpg", map: "双月食品社 済南店", budget: "200〜400元", budgetMin: 200, budgetMax: 400 },
+                    { time: "17:00", name: "林華泰茶行", type: "spot", desc: "歴史ある老舗茶行で、香りや焙煎違いを比べながら茶葉を選べるのが魅力。価格も比較的手頃で、普段使いから贈答用まで幅広く購入しやすい名店です。", img: "images/lin_hua_tai.jpg", map: "林華泰茶行", budget: "600元〜（茶葉の種類による）", budgetMin: 600, budgetMax: null },
+                    { time: "17:30", name: "迪化街", type: "spot", desc: "古い商家建築と新しい感性の店が共存する台北屈指の散策エリア。乾物・漢方・茶葉の老舗に加え、カフェや雑貨店も多く、歩くだけでも発見があります。夕暮れの時間はコンテナ街に立ち寄り、クラフトビールを飲みながら雰囲気を楽しむ予定です。", img: "images/dihua_street.jpg", map: "迪化街", mapUrl: "https://maps.app.goo.gl/ry56SjptToSpvjoJ6", budget: "200〜400元（コンテナ街でビール）", budgetMin: 200, budgetMax: 400 },
+                    { time: "19:30", name: "阿城鵝肉 (吉林店)", type: "spot", desc: "ミシュラン・ビブグルマン掲載の人気店。まず整理券を受け取り、呼び出しまでの待ち時間は近隣の熱炒店で軽く飲みながら過ごす想定です。燻製ガチョウは香り高く旨味が濃く、台北グルメの代表格として高い満足感があります。", img: "images/acheng_goose_jilin.jpg", map: "阿城鵝肉 吉林店", mapUrl: "https://maps.app.goo.gl/4NeWtcDB3gjJwQ1EA", budget: "500〜800元（鵝肉＋熱炒）", budgetMin: 500, budgetMax: 800 },
+                    { time: "22:00", name: "ホテル帰館", type: "hotel", desc: "Water Meworldへ戻り、旅の思い出を振り返りながら休息。", img: "images/water_meworld.jpg", map: "Water Meworld" },
+                    { time: "23:30", name: "Kavalan Whisky Bar (希望者のみ)", type: "spot", desc: "深夜にホテルへ一度戻ったあと、希望者でKavalan Whisky Barへ。台湾ウイスキーを中心に、落ち着いた空間で軽く一杯を楽しむ任意参加プランです。", img: "images/kavalan_whisky_bar.jpg", map: "Kavalan Whisky Bar", mapUrl: "https://maps.app.goo.gl/s4y9XS7bJNN8QUVe7", budget: "約1,500元（任意・下部合計には含めません）" }
+                ]
+            },
+            {
+                date: "Day 4: 5/18 (月) 台北〜帰国",
+                spots: [
+                    { time: "08:00", name: "ホテル出発 (チェックアウト)", type: "hotel", desc: "荷物を預け、最終日の朝の活気を感じに出発します。", img: "images/water_meworld.jpg", map: "Water Meworld" },
+                    { time: "08:30", name: "雙連朝市 & 香満園", type: "spot", desc: "ローカルの暮らしが色濃く残る朝市で、台北の朝の空気を体感できるエリア。香満園では定番の魯肉飯を中心に、素朴で力強い味わいを楽しめます。", img: "images/xiangmanyuan.jpg", map: "香満園", mapUrl: "https://maps.app.goo.gl/1YHNA34KqQ6H9Sih6", budget: "60〜100元", budgetMin: 60, budgetMax: 100 },
+                    { time: "09:30", name: "赤峰街散策", type: "spot", desc: "中山エリアで注目を集める街歩きスポット。古い建物を活かしたセンスあるショップやカフェが並び、短時間でも台北の今らしい空気を感じられます。", img: "images/chifeng_street.jpg", map: "赤峰街" },
+                    { time: "11:00", name: "神農生活 (誠品生活南西)", type: "spot", desc: "台湾各地の食品・雑貨・工芸を丁寧に編集した人気セレクト店。品質の高い土産を効率よく選べるため、旅の締めくくりの買い物にも最適な一店です。", img: "images/shinonglife_nanxi.jpg", map: "神農生活 誠品生活南西店", budget: "500元〜（お土産購入次第）", budgetMin: 500, budgetMax: null },
+                    { time: "12:30", name: "ホテルで荷物ピックアップ", type: "hotel", desc: "台北駅から桃園空港MRT（快速）に乗車します。", img: "images/water_meworld.jpg", map: "Water Meworld" },
+                    { time: "15:30", name: "桃園国際空港(TPE) 出発", type: "transport", desc: "お土産と最高の思い出を胸に日本へ帰国します。", img: "images/taoyuan_airport.jpg", map: "桃園国際空港" }
+                ]
+            }
+        ];
+
+        function toggleDay(dayIndex, expand) {
+            const daySection = document.querySelector(`section[data-day-index="${dayIndex}"]`);
+            if (!daySection) return;
+            const cards = daySection.querySelectorAll('.spot-card');
+            cards.forEach((card) => {
+                if (expand) {
+                    card.classList.add('active');
+                } else {
+                    card.classList.remove('active');
+                }
+            });
+        }
+
+        function detectCity(spot) {
+            const text = `${spot.name} ${spot.map}`;
+            if (/(高雄|KHH|蓮池潭|駁二|興隆居|港園|YONSHIN|Pier No\.1)/.test(text)) return "高雄";
+            if (/(台南|Tainan|阿霞|林百貨|神農街|王氏魚皮店|高鉄台南|THSR|花園夜市|安平|文章牛肉湯|沙崙駅)/.test(text)) return "台南";
+            if (/(桃園|TPE)/.test(text)) return "桃園";
+            if (/(台北|Taipei|双月|雙連|神農生活|迪化街|阿城|林華泰|Water Meworld|台北駅|赤峰街|Kavalan)/i.test(text)) return "台北";
+            return "その他";
+        }
+
+        function getSpotIcon(spot) {
+            const text = `${spot.name} ${spot.map}`;
+            if (spot.type === "hotel") return "🏨";
+            if (spot.type === "transport") {
+                if (/(空港|KHH|TPE)/.test(text)) return "✈️";
+                if (/(駅|THSR|高鉄|台鉄)/.test(text)) return "🚆";
+                return "🚉";
+            }
+            if (/(飯店|食品社|牛肉|居|香満園|FUDOPIA|夜市|魚皮店)/.test(text)) return "🍽️";
+            if (/(街|塔|特区|樹屋|百貨|茶行)/.test(text)) return "🗺️";
+            if (/(バー|Pier|bar|Bar|Whisky)/.test(text)) return "🍸";
+            return "📍";
+        }
+
+        function getAwardBadge(spot) {
+            const text = `${spot.name} ${spot.desc}`;
+            const hasMichelin = /ミシュラン|ビブグルマン/i.test(text);
+            if (!hasMichelin) return "";
+            const michelinBadge = `data:image/svg+xml;utf8,${encodeURIComponent(`
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+                    <circle cx="32" cy="32" r="31" fill="#B51E28"/>
+                    <text x="32" y="30" text-anchor="middle" font-size="8" fill="#fff" font-family="Arial, sans-serif" font-weight="700">MICHELIN</text>
+                    <text x="32" y="41" text-anchor="middle" font-size="7" fill="#fff" font-family="Arial, sans-serif">Guide</text>
+                </svg>
+            `)}`;
+            return `<img src="${michelinBadge}" alt="Michelin" style="width:18px;height:18px;border-radius:9999px;display:inline-block;vertical-align:middle;margin-right:6px;">`;
+        }
+
+        function getSpotPosition(city, mapName, index) {
+            const positions = {
+                "高雄": {
+                    "高雄国際空港": [74, 190], "金石大飯店": [122, 112], "龍虎塔": [84, 52], "駁二芸術特区": [38, 126],
+                    "港園牛肉麺": [52, 144], "YONSHIN FUDOPIA": [44, 136], "興隆居": [110, 102], "高雄駅": [106, 92]
+                },
+                "台南": {
+                    "GALA INN": [126, 88], "阿霞飯店": [96, 118], "林百貨": [108, 124], "神農街": [86, 112],
+                    "王氏魚皮店": [98, 104], "高鉄台南駅": [188, 170], "台南駅": [126, 100]
+                },
+                "台北": {
+                    "Water Meworld": [112, 132], "双月食品社 済南店": [132, 146], "林華泰茶行": [92, 118],
+                    "迪化街": [82, 106], "阿城鵝肉 吉林店": [148, 118], "香満園": [98, 96], "神農生活 誠品生活南西店": [108, 104], "Kavalan Whisky Bar": [124, 112],
+                    "桃園国際空港": [26, 184]
+                }
+            };
+            const cityPos = positions[city] || {};
+            if (cityPos[mapName]) return cityPos[mapName];
+            const fallbackX = 40 + ((index * 34) % 150);
+            const fallbackY = 50 + ((index * 22) % 130);
+            return [fallbackX, fallbackY];
+        }
+
+        function buildCityMaps(day) {
+            const cityGroups = {};
+            day.spots.forEach((spot) => {
+                const city = detectCity(spot);
+                if (!cityGroups[city]) cityGroups[city] = [];
+                cityGroups[city].push(spot);
+            });
+            return Object.entries(cityGroups)
+                .filter(([city]) => city !== "その他")
+                .map(([city, spots]) => ({
+                    city,
+                    spots
+                }));
+        }
+
+        async function geocodeSpot(query, city) {
+            if (spotCoordinates[query]) return spotCoordinates[query];
+            const url = `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(`${query} ${city} 台湾`)}`;
+            try {
+                const res = await fetch(url, { headers: { "Accept-Language": "ja" } });
+                const data = await res.json();
+                if (data && data[0]) {
+                    return { lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lon) };
+                }
+            } catch (_) {}
+            return null;
+        }
+
+        async function renderSpotMap(containerId, city, spots) {
+            const mapEl = document.getElementById(containerId);
+            if (!mapEl) return;
+            const center = cityCenters[city] || cityCenters["台北"];
+            const map = L.map(containerId).setView([center.lat, center.lng], center.zoom);
+            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+
+            const bounds = [];
+            for (let i = 0; i < spots.length; i += 1) {
+                const spot = spots[i];
+                const pos = await geocodeSpot(spot.map, city);
+                if (!pos) continue;
+                const numberedIcon = L.divIcon({
+                    className: "numbered-marker",
+                    html: `<div style="
+                        width: 24px;
+                        height: 24px;
+                        border-radius: 9999px;
+                        background:#A62C2B;
+                        color:#fff;
+                        font-size:12px;
+                        font-weight:700;
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        border:2px solid #fff;
+                        box-shadow:0 1px 4px rgba(0,0,0,0.3);
+                    ">${i + 1}</div>`,
+                    iconSize: [24, 24],
+                    iconAnchor: [12, 12],
+                    popupAnchor: [0, -12]
+                });
+                const marker = L.marker([pos.lat, pos.lng], { icon: numberedIcon }).addTo(map);
+                marker.bindPopup(`<b>${i + 1}. ${spot.name}</b><br>${spot.map}`);
+                bounds.push([pos.lat, pos.lng]);
+            }
+            if (bounds.length >= 2) {
+                map.fitBounds(bounds, { padding: [28, 28], maxZoom: 14 });
+            } else if (bounds.length === 1) {
+                map.setView(bounds[0], 13);
+            }
+        }
+
+        function render() {
+            const container = document.getElementById('itinerary-container');
+            const mapRenderTasks = [];
+            days.forEach((day, dayIndex) => {
+                const cityMaps = buildCityMaps(day);
+                const dayEl = document.createElement('section');
+                dayEl.setAttribute('data-day-index', dayIndex);
+                dayEl.innerHTML = `<div class="mb-4">
+                    <h2 class="text-xl font-bold bg-[#1A1A1A] text-white px-4 py-2 rounded">${day.date}</h2>
+                    <div class="mt-2 flex gap-2 justify-end">
+                        <button type="button" class="px-3 py-1 rounded bg-[#A62C2B] text-white text-xs font-bold hover:opacity-90 transition-opacity"
+                                onclick="toggleDay(${dayIndex}, true)">すべて開く</button>
+                        <button type="button" class="px-3 py-1 rounded bg-gray-200 text-gray-800 text-xs font-bold hover:bg-gray-300 transition-colors"
+                                onclick="toggleDay(${dayIndex}, false)">すべて閉じる</button>
+                    </div>
+                </div>
+                <div class="relative pl-8 ml-2 border-l-2 border-gray-200 space-y-4">
+                    ${day.spots.map((spot, spotIndex) => `
+                        <div class="relative spot-card cursor-pointer group" id="spot-${dayIndex}-${spotIndex}" data-day-index="${dayIndex}" data-spot-index="${spotIndex}" onclick="this.classList.toggle('active')">
+                            <div class="timeline-dot ${spot.type === 'hotel' ? 'hotel-dot' : ''}"></div>
+                            <div class="flex items-center justify-between bg-white p-3 rounded-lg shadow-sm border border-gray-100 hover:border-[#A62C2B] transition-colors">
+                                <div class="flex items-center gap-4">
+                                    <span class="text-xs font-bold ${spot.type === 'hotel' ? 'text-amber-600' : 'text-[#A62C2B]'} min-w-[40px]">${spot.time}</span>
+                                    <h3 class="font-bold text-sm text-gray-800">${getAwardBadge(spot)}${getSpotIcon(spot)} ${spot.name}</h3>
+                                </div>
+                                <span class="text-gray-300 text-xs arrow transition-transform">▼</span>
+                            </div>
+                            <div class="spot-details bg-white rounded-lg p-4 shadow-inner border border-gray-100">
+                                ${spot.type !== 'transport' ? `
+                                <img src="${spot.img}" class="ai-image" alt="${spot.name}"
+                                     onerror="this.onerror=null; this.src='images/kaohsiung_airport.jpg';">` : ''}
+                                <p class="text-sm text-gray-600 leading-relaxed mb-4">${spot.desc}</p>
+                                ${spot.budget ? `<div class="mb-4 inline-flex items-center gap-2 px-3 py-1.5 bg-amber-50 border border-amber-200 rounded text-xs text-amber-900"><span class="font-bold">💰 予算目安 (1人)</span><span>${spot.budget}</span></div>` : ''}
+                                ${spot.ticketImage ? `<p class="mb-4"><a href="${spot.ticketImage}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[#A62C2B] text-sm font-bold hover:underline" onclick="event.stopPropagation()">オンライン予約の確認画面（カウンター提示用）を別タブで開く</a></p>` : ''}
+                                <a href="${spot.mapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(spot.map)}`}" target="_blank"
+                                   class="block text-center py-2 bg-[#1A1A1A] text-white rounded-lg text-xs font-bold hover:bg-[#A62C2B] transition-colors"
+                                   onclick="event.stopPropagation()">Google Map 📍</a>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="mt-5 space-y-4">
+                    ${cityMaps.map((m) => `
+                        <div class="bg-white border border-gray-200 rounded-lg p-3 shadow-sm">
+                            <h4 class="text-sm font-bold text-gray-800 mb-2">${m.city}の市内マップ</h4>
+                            <div id="map-day-${dayIndex}-${m.city}" class="w-full h-56 rounded border border-gray-200"></div>
+                            <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-1">
+                                ${m.spots.map((spot, idx) => `
+                                    <div class="text-xs text-gray-700">
+                                        <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(spot.map)}" target="_blank"
+                                           class="hover:underline">
+                                            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-[#A62C2B] text-white mr-1">${idx + 1}</span>
+                                            ${spot.name}
+                                        </a>
+                                    </div>
+                                `).join("")}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>`;
+                container.appendChild(dayEl);
+                cityMaps.forEach((m) => {
+                    mapRenderTasks.push({ id: `map-day-${dayIndex}-${m.city}`, city: m.city, spots: m.spots });
+                });
+            });
+            return mapRenderTasks;
+        }
+        async function initializeMaps() {
+            const tasks = render();
+            for (const task of tasks) {
+                await renderSpotMap(task.id, task.city, task.spots);
+            }
+        }
+        initializeMaps();
+
+        function findCurrentSpotIndex() {
+            const now = new Date();
+            let lastBeforeNow = null;
+            for (let d = 0; d < days.length; d += 1) {
+                const day = days[d];
+                const m = day.date.match(/(\d{1,2})\/(\d{1,2})/);
+                if (!m) continue;
+                const month = parseInt(m[1], 10);
+                const dayNum = parseInt(m[2], 10);
+                for (let s = 0; s < day.spots.length; s += 1) {
+                    const spot = day.spots[s];
+                    const t = spot.time.match(/(\d{1,2}):(\d{2})/);
+                    if (!t) continue;
+                    const spotDate = new Date(2026, month - 1, dayNum, parseInt(t[1], 10), parseInt(t[2], 10), 0, 0);
+                    if (spotDate <= now) {
+                        lastBeforeNow = { dayIndex: d, spotIndex: s };
+                    } else {
+                        if (lastBeforeNow) return lastBeforeNow;
+                        return { dayIndex: d, spotIndex: s };
+                    }
+                }
+            }
+            if (lastBeforeNow) return lastBeforeNow;
+            return { dayIndex: 0, spotIndex: 0 };
+        }
+
+        function jumpToCurrentSpot() {
+            const target = findCurrentSpotIndex();
+            const el = document.getElementById(`spot-${target.dayIndex}-${target.spotIndex}`);
+            if (!el) return;
+            document.querySelectorAll('.spot-card.current-spot').forEach((c) => c.classList.remove('current-spot'));
+            el.classList.add('current-spot');
+            el.classList.add('active');
+            const headerOffset = 80;
+            const rect = el.getBoundingClientRect();
+            window.scrollTo({ top: window.scrollY + rect.top - headerOffset, behavior: 'smooth' });
+        }
+
+        document.getElementById('jump-to-now').addEventListener('click', jumpToCurrentSpot);
+
+        function renderBudgetSummary() {
+            const target = document.getElementById('budget-summary-content');
+            if (!target) return;
+            const TWD_TO_JPY = 5;
+            let totalMin = 0;
+            let totalMaxKnown = 0;
+            let hasOpenEnd = false;
+            const dayRows = days.map((day) => {
+                let dayMin = 0;
+                let dayMaxKnown = 0;
+                let dayHasOpen = false;
+                const items = [];
+                day.spots.forEach((spot) => {
+                    if (spot.type !== 'spot' || typeof spot.budgetMin !== 'number') return;
+                    dayMin += spot.budgetMin;
+                    if (typeof spot.budgetMax === 'number') {
+                        dayMaxKnown += spot.budgetMax;
+                    } else {
+                        dayMaxKnown += spot.budgetMin;
+                        dayHasOpen = true;
+                    }
+                    items.push(`<li class="flex justify-between gap-3 py-0.5"><span class="text-gray-700">${spot.name}</span><span class="text-gray-600 tabular-nums whitespace-nowrap">${spot.budget}</span></li>`);
+                });
+                totalMin += dayMin;
+                totalMaxKnown += dayMaxKnown;
+                if (dayHasOpen) hasOpenEnd = true;
+                const dayLabel = day.date;
+                const rangeText = dayMin === dayMaxKnown
+                    ? `${dayMin.toLocaleString()}元${dayHasOpen ? '〜' : ''}`
+                    : `${dayMin.toLocaleString()}〜${dayMaxKnown.toLocaleString()}元${dayHasOpen ? '〜' : ''}`;
+                return `
+                    <div class="border border-gray-100 rounded p-3 bg-gray-50">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-bold text-sm text-gray-800">${dayLabel}</h3>
+                            <span class="text-xs font-bold text-[#A62C2B] tabular-nums">${rangeText}</span>
+                        </div>
+                        <ul class="text-xs space-y-0.5">${items.join('')}</ul>
+                    </div>`;
+            }).join('');
+
+            const totalRange = totalMin === totalMaxKnown
+                ? `${totalMin.toLocaleString()}元${hasOpenEnd ? '〜' : ''}`
+                : `${totalMin.toLocaleString()}〜${totalMaxKnown.toLocaleString()}元${hasOpenEnd ? '〜' : ''}`;
+            const jpyMin = Math.round(totalMin * TWD_TO_JPY).toLocaleString();
+            const jpyMaxKnown = Math.round(totalMaxKnown * TWD_TO_JPY).toLocaleString();
+            const jpyRange = totalMin === totalMaxKnown
+                ? `約 ${jpyMin}円${hasOpenEnd ? '〜' : ''}`
+                : `約 ${jpyMin}〜${jpyMaxKnown}円${hasOpenEnd ? '〜' : ''}`;
+
+            target.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">${dayRows}</div>
+                <div class="border-t border-gray-200 pt-3 flex flex-col gap-1">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-base">合計（1人あたり）</span>
+                        <span class="font-bold text-[#A62C2B] text-base tabular-nums">${totalRange}</span>
+                    </div>
+                    <div class="flex items-center justify-between text-xs text-gray-500">
+                        <span>日本円換算（1元 ≈ ${TWD_TO_JPY}円）</span>
+                        <span class="tabular-nums">${jpyRange}</span>
+                    </div>
+                    ${hasOpenEnd ? '<p class="text-xs text-gray-500 mt-1">※「〜」表記の項目はお土産・茶葉・カフェなどの購入額により上限なし。</p>' : ''}
+                </div>`;
+        }
+        renderBudgetSummary();
+    </script>
+</body>
+</html>
