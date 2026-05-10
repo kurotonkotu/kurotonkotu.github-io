@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>台湾3泊4日 究極の大人旅スケジュール</title>
+    <title>NED いきたいわん 2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Shippori+Mincho:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
@@ -38,6 +38,37 @@
             z-index: 5;
             box-shadow: 0 1px 3px rgba(0,0,0,0.2);
         }
+        .schedule-type-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.875rem;
+            height: 1.875rem;
+            border-radius: 9999px;
+            vertical-align: middle;
+            flex-shrink: 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+        .schedule-type-icon svg {
+            display: block;
+        }
+        .schedule-type-icon-letter {
+            color: #fff;
+            font-size: 0.8125rem;
+            font-weight: 700;
+            line-height: 1;
+            user-select: none;
+        }
+        .schedule-award-badge {
+            width: 1.875rem;
+            height: 1.875rem;
+            border-radius: 9999px;
+            flex-shrink: 0;
+            display: block;
+            object-fit: cover;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+        }
         .ai-image {
             background: #f3f4f6;
             border-radius: 0.5rem;
@@ -53,7 +84,7 @@
 <body class="p-4 md:p-8 mb-20">
     <div class="max-w-2xl mx-auto">
         <header class="mb-10 border-b-2 border-[#A62C2B] pb-6">
-            <h1 class="text-3xl font-bold serif mb-2 text-[#A62C2B]">台湾3泊4日 完全行程表</h1>
+            <h1 class="text-3xl font-bold serif mb-2 text-[#A62C2B]">NED いきたいわん 2026</h1>
             <p class="text-gray-500 text-sm">高雄・台南・台北を巡る美食と文化の旅</p>
         </header>
 
@@ -209,6 +240,7 @@ Water Meworld</td>
             "YONSHIN FUDOPIA": { lat: 22.6161, lng: 120.2825 },
             "興隆居": { lat: 22.6319, lng: 120.2949 },
             "高雄駅": { lat: 22.6396, lng: 120.3028 },
+            "美麗島駅": { lat: 22.6314, lng: 120.3018 },
             "Pier No.1": { lat: 22.6122, lng: 120.3005 },
             "GALA INN": { lat: 22.9978, lng: 120.2123 },
             "阿霞飯店": { lat: 22.9955, lng: 120.2046 },
@@ -244,7 +276,7 @@ Water Meworld</td>
                     { time: "08:00", name: "成田空港(T3) 集合", type: "transport", desc: `第3ターミナル2階・国際線出発ロビーに集合。スカイライナー利用の場合は「空港第2ビル駅」からT3へ向かい、徒歩またはターミナル連絡バス（無料）で移動できます。動線の詳細は次の公式ページを参照してください。<br><a href="https://www.narita-airport.jp/ja/access/train/railway-route-3/" target="_blank" rel="noopener noreferrer" class="text-[#A62C2B] font-medium hover:underline break-all" onclick="event.stopPropagation()">空港第2ビル駅と第3ターミナル間の移動（成田国際空港）</a>`, map: "成田空港 第3ターミナル" },
                     { time: "09:55", name: "成田空港(NRT) 出発（日本出国）", type: "transport", desc: "日本出国。便は旅の準備のとおりジェットスター GK017（予定）。フライト時間は約4時間5分。", map: "成田空港 第3ターミナル" },
                     { time: "13:00", name: "高雄国際空港(KHH) 到着", type: "transport", desc: "台湾南部へのゲートウェイ。入国後、MRTで市内へ移動します。", img: "images/kaohsiung_airport.jpg", map: "高雄国際空港" },
-                    { time: "14:15", name: "金石ホテル (荷物預け)", type: "hotel", desc: "美麗島駅近くの便利な立地。まずは荷物を預けて身軽に観光をスタート。", img: "images/jinshi_hotel.png", map: "金石大飯店" },
+                    { time: "14:15", name: "金石ホテル (荷物預け)", type: "hotel", desc: "美麗島駅近くの便利な立地。まずは荷物を預けて身軽に観光をスタート。まずどこかで軽食を食べる予定です。", img: "images/jinshi_hotel.png", map: "金石大飯店" },
                     { time: "15:30", name: "龍虎塔 (蓮池潭)", type: "spot", desc: "蓮池潭を象徴する高雄屈指の名所。龍口から入り虎口から出る参拝作法が有名で、鮮やかな造形と湖畔の景観を同時に楽しめる開運スポットです。", img: "images/dragon_tiger_pagodas.jpg", map: "龍虎塔", mapUrl: "https://maps.app.goo.gl/tBFuF7bQDLtKMcTp8", budget: "無料 (お布施任意)", budgetMin: 0, budgetMax: 0 },
                     { time: "17:30", name: "駁二芸術特区", type: "spot", desc: "港湾倉庫を再生した高雄の文化発信地。大型アート、ギャラリー、雑貨店、カフェが点在し、海風を感じながら写真映えする散策ができます。", img: "images/pier2_art_center.jpg", map: "駁二芸術特区", mapUrl: "https://maps.app.goo.gl/n9DrTXX1v1yi29uKA", budget: "散策無料（一部展示は有料）", budgetMin: 0, budgetMax: 0 },
                     { time: "19:00", name: "YONSHIN FUDOPIA (永心浮島)", type: "spot", desc: "高雄港を望む話題のダイニング。洗練された内装と夕景が魅力で、台式アレンジ料理や軽いタパスとお酒を気分よく楽しめる雰囲気の良い一軒です。", img: "images/yonshin_fudopia.jpg", map: "YONSHIN FUDOPIA", budget: "600〜1,000元", budgetMin: 600, budgetMax: 1000 },
@@ -256,9 +288,10 @@ Water Meworld</td>
             {
                 date: "Day 2: 5/16 (土) 高雄〜台南",
                 spots: [
-                    { time: "08:00", name: "ホテル出発 (チェックアウト)", type: "hotel", desc: "荷物を預けて、朝食の名店へ向かいます。", img: "images/jinshi_hotel.png", map: "金石大飯店" },
-                    { time: "08:30", name: "興隆居 (高雄)", type: "spot", desc: "朝から行列ができる高雄の人気朝食店。看板の湯包は噛むと肉汁が広がり、厚みのある蛋餅や豆乳と合わせると台湾らしい朝の満足感を味わえます。かなり混雑する店のため、待ち時間次第では近隣の別店へ切り替える可能性があります。", img: "images/xinglongju.jpg", map: "興隆居", mapUrl: "https://maps.app.goo.gl/yydyiBB4EkF3BXHt7", budget: "50〜100元", budgetMin: 50, budgetMax: 100 },
-                    { time: "11:43", name: "高雄駅 出発", type: "transport", desc: "11:43 美麗島〜(MRT)〜高雄〜(自強號)〜台南 12:33着", img: "images/kaohsiung_station.jpg", map: "高雄駅", budget: "180元" },
+                    { time: "08:30", name: "興隆居 (高雄)", type: "spot", desc: "この時間帯はまだチェックアウトせず、ホテルを出て朝食へ。朝から行列ができる高雄の人気朝食店。看板の湯包は噛むと肉汁が広がり、厚みのある蛋餅や豆乳と合わせると台湾らしい朝の満足感を味わえます。かなり混雑する店のため、待ち時間次第では近隣の別店へ切り替える可能性があります。", img: "images/xinglongju.jpg", map: "興隆居", mapUrl: "https://maps.app.goo.gl/yydyiBB4EkF3BXHt7", budget: "50〜100元", budgetMin: 50, budgetMax: 100 },
+                    { time: "10:30", name: "ホテル帰館", type: "hotel", desc: "朝食のあと金石ホテルに戻り、荷物の整理などチェックアウトに備えます。", img: "images/jinshi_hotel.png", map: "金石大飯店" },
+                    { time: "11:00", name: "チェックアウト", type: "hotel", desc: "手続きを済ませ、台湾鉄道（台鉄）での移動に向かいます。", img: "images/jinshi_hotel.png", map: "金石大飯店" },
+                    { time: "11:43", name: "美麗島駅 出発", type: "transport", desc: "11:43ごろのダイヤ想定で美麗島駅よりMRTで高雄駅へ。高雄駅から自強號で台南へ（例：12:33着）は当日スケジュールで要確認。", img: "images/kaohsiung_station.jpg", map: "美麗島駅", budget: "180元" },
                     { time: "13:15", name: "GALA INN (台南・荷物預け)", type: "hotel", desc: "台南の拠点へチェックイン前に荷物を預けます。ここから台南美食巡りのスタート。", img: "images/gala_inn.jpg", map: "GALA INN" },
                     { time: "14:00", name: "阿霞飯店", type: "spot", desc: "創業以来愛される台南名店で、祝いの席でも使われる格式ある老舗。名物の蟹おこわは香り高いもち米と蟹の旨味が重なり、訪問価値の高い逸品です。予約が取れなかったため、待ち時間が長い場合は近くの阿美飯店の様子を見て、早く入れそうな方へ向かいます。", img: "images/axia_restaurant.jpg", map: "阿霞飯店", mapUrl: "https://maps.app.goo.gl/Y7vcHmM4Ld47tiHAA", budget: "800〜1,200元", budgetMin: 800, budgetMax: 1200 },
                     { time: "16:00", name: "林百貨", type: "spot", desc: "歴史建築を活用した台南のランドマーク。館内には台湾デザイン雑貨や食品、工芸品が揃い、最上階からの街並み眺望まで楽しめる見どころ豊富な百貨店です。", img: "images/hayashi_department_store.png", map: "林百貨", budget: "300元〜（お土産・カフェ次第）", budgetMin: 300, budgetMax: null },
@@ -316,25 +349,47 @@ Water Meworld</td>
 
         function detectCity(spot) {
             const text = `${spot.name} ${spot.map}`;
-            if (/(高雄|KHH|蓮池潭|駁二|興隆居|港園|YONSHIN|Pier No\.1)/.test(text)) return "高雄";
+            if (/(高雄|KHH|蓮池潭|駁二|興隆居|港園|YONSHIN|Pier No\.1|美麗島)/.test(text)) return "高雄";
             if (/(台南|Tainan|阿霞|林百貨|神農街|王氏魚皮店|高鉄台南|THSR|花園夜市|安平|文章牛肉湯|沙崙駅)/.test(text)) return "台南";
             if (/(桃園|TPE)/.test(text)) return "桃園";
             if (/(台北|Taipei|双月|雙連|神農生活|迪化街|阿城|林華泰|Water Meworld|台北駅|赤峰街|Kavalan)/i.test(text)) return "台北";
             return "その他";
         }
 
-        function getSpotIcon(spot) {
+        function getSpotIconCategory(spot) {
             const text = `${spot.name} ${spot.map}`;
-            if (spot.type === "hotel") return "🏨";
+            if (spot.type === "hotel") return "hotel";
             if (spot.type === "transport") {
-                if (/(空港|KHH|TPE|成田|NRT)/.test(text)) return "✈️";
-                if (/(駅|THSR|高鉄|台鉄)/.test(text)) return "🚆";
-                return "🚉";
+                if (/(空港|KHH|TPE|成田|NRT)/.test(text)) return "flight";
+                return "rail_local";
             }
-            if (/(飯店|食品社|牛肉|居|香満園|FUDOPIA|夜市|魚皮店)/.test(text)) return "🍽️";
-            if (/(街|塔|特区|樹屋|百貨|茶行)/.test(text)) return "🗺️";
-            if (/(バー|Pier|bar|Bar|Whisky)/.test(text)) return "🍸";
-            return "📍";
+            if (spot.type === "spot") {
+                if (/(バー|Pier|bar|Bar|Whisky)/.test(text)) return "bar";
+                if (/(飯店|食品社|牛肉|居|香満園|FUDOPIA|夜市|魚皮店|鵝肉)/.test(text)) return "food";
+                return "sight";
+            }
+            return "sight";
+        }
+
+        function getSpotIcon(spot) {
+            const cat = getSpotIconCategory(spot);
+            const badges = {
+                hotel: { color: "#B45309", label: "宿泊", letter: "泊" },
+                flight: {
+                    color: "#1D4ED8",
+                    label: "航空",
+                    svg: '<path fill="#fff" d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>'
+                },
+                rail_local: { color: "#0E7490", label: "電車・新幹線・MRT", letter: "鉄" },
+                food: { color: "#C2410C", label: "飲食", letter: "食" },
+                sight: { color: "#15803D", label: "観光・散策・買い物", letter: "見" },
+                bar: { color: "#4338CA", label: "バー・ナイト", letter: "酒" }
+            };
+            const b = badges[cat] || badges.sight;
+            const inner = b.svg != null
+                ? `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">${b.svg}</svg>`
+                : `<span class="schedule-type-icon-letter" aria-hidden="true">${b.letter}</span>`;
+            return `<span class="schedule-type-icon" style="background-color:${b.color}" role="img" aria-label="${b.label}">${inner}</span>`;
         }
 
         function getAwardBadge(spot) {
@@ -348,14 +403,14 @@ Water Meworld</td>
                     <text x="32" y="41" text-anchor="middle" font-size="7" fill="#fff" font-family="Arial, sans-serif">Guide</text>
                 </svg>
             `)}`;
-            return `<img src="${michelinBadge}" alt="Michelin" style="width:18px;height:18px;border-radius:9999px;display:inline-block;vertical-align:middle;margin-right:6px;">`;
+            return `<img src="${michelinBadge}" alt="Michelin" class="schedule-award-badge">`;
         }
 
         function getSpotPosition(city, mapName, index) {
             const positions = {
                 "高雄": {
                     "高雄国際空港": [74, 190], "金石大飯店": [122, 112], "龍虎塔": [84, 52], "駁二芸術特区": [38, 126],
-                    "港園牛肉麺": [52, 144], "YONSHIN FUDOPIA": [44, 136], "興隆居": [110, 102], "高雄駅": [106, 92]
+                    "港園牛肉麺": [52, 144], "YONSHIN FUDOPIA": [44, 136], "興隆居": [110, 102], "高雄駅": [106, 92], "美麗島駅": [118, 108]
                 },
                 "台南": {
                     "GALA INN": [126, 88], "阿霞飯店": [96, 118], "林百貨": [108, 124], "神農街": [86, 112],
@@ -374,9 +429,20 @@ Water Meworld</td>
             return [fallbackX, fallbackY];
         }
 
+        function shouldShowSpotOnMiniMap(spot) {
+            if (spot.type !== "hotel") return true;
+            const n = spot.name;
+            if (/ホテル帰[館還]/.test(n)) return false;
+            if (/荷物ピックアップ/.test(n)) return false;
+            if (/ホテル出発/.test(n)) return false;
+            if (n === "チェックアウト") return false;
+            return true;
+        }
+
         function buildCityMaps(day) {
             const cityGroups = {};
             day.spots.forEach((spot) => {
+                if (!shouldShowSpotOnMiniMap(spot)) return;
                 const city = detectCity(spot);
                 if (!cityGroups[city]) cityGroups[city] = [];
                 cityGroups[city].push(spot);
@@ -470,7 +536,7 @@ Water Meworld</td>
                             <div class="flex items-center justify-between bg-white p-3 rounded-lg shadow-sm border border-gray-100 hover:border-[#A62C2B] transition-colors">
                                 <div class="flex items-center gap-4">
                                     <span class="text-xs font-bold ${spot.type === 'hotel' ? 'text-amber-600' : 'text-[#A62C2B]'} min-w-[40px]">${spot.time}</span>
-                                    <h3 class="font-bold text-sm text-gray-800">${getAwardBadge(spot)}${getSpotIcon(spot)} ${spot.name}</h3>
+                                    <h3 class="font-bold text-sm text-gray-800 flex items-center gap-2 min-w-0">${getAwardBadge(spot)}${getSpotIcon(spot)}<span class="min-w-0">${spot.name}</span></h3>
                                 </div>
                                 <span class="text-gray-300 text-xs arrow transition-transform">▼</span>
                             </div>
