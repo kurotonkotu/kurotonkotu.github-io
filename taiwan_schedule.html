@@ -232,13 +232,17 @@ Water Meworld</td>
             "赤峰街": { lat: 25.0547, lng: 121.5196 },
             "Kavalan Whisky Bar": { lat: 25.0515, lng: 121.5208 },
             "神農生活 誠品生活南西店": { lat: 25.0522, lng: 121.5191 },
-            "桃園国際空港": { lat: 25.0797, lng: 121.2342 }
+            "桃園国際空港": { lat: 25.0797, lng: 121.2342 },
+            "成田空港 第3ターミナル": { lat: 35.7647, lng: 140.3864 },
+            "成田空港": { lat: 35.7647, lng: 140.3864 }
         };
 
         const days = [
             {
                 date: "Day 1: 5/15 (金) 高雄",
                 spots: [
+                    { time: "08:00", name: "成田空港(T3) 集合", type: "transport", desc: "第3ターミナル2階・国際線出発ロビーに集合。スカイライナー利用の場合は「空港第2ビル駅」からT3へ向かい、徒歩またはターミナル連絡バス（無料）で移動できます。動線の詳細は成田空港公式の案内を参照。\nhttps://www.narita-airport.jp/ja/access/train/railway-route-3/", map: "成田空港 第3ターミナル" },
+                    { time: "09:55", name: "成田空港(NRT) 出発（日本出国）", type: "transport", desc: "日本出国。便は旅の準備のとおりジェットスター GK017（予定）。", map: "成田空港 第3ターミナル" },
                     { time: "13:00", name: "高雄国際空港(KHH) 到着", type: "transport", desc: "台湾南部へのゲートウェイ。入国後、MRTで市内へ移動します。", img: "images/kaohsiung_airport.jpg", map: "高雄国際空港" },
                     { time: "14:15", name: "金石ホテル (荷物預け)", type: "hotel", desc: "美麗島駅近くの便利な立地。まずは荷物を預けて身軽に観光をスタート。", img: "images/jinshi_hotel.png", map: "金石大飯店" },
                     { time: "15:30", name: "龍虎塔 (蓮池潭)", type: "spot", desc: "蓮池潭を象徴する高雄屈指の名所。龍口から入り虎口から出る参拝作法が有名で、鮮やかな造形と湖畔の景観を同時に楽しめる開運スポットです。", img: "images/dragon_tiger_pagodas.jpg", map: "龍虎塔", mapUrl: "https://maps.app.goo.gl/tBFuF7bQDLtKMcTp8", budget: "無料 (お布施任意)", budgetMin: 0, budgetMax: 0 },
@@ -289,8 +293,10 @@ Water Meworld</td>
                     { time: "08:30", name: "雙連朝市 & 香満園", type: "spot", desc: "ローカルの暮らしが色濃く残る朝市で、台北の朝の空気を体感できるエリア。香満園では定番の魯肉飯を中心に、素朴で力強い味わいを楽しめます。", img: "images/xiangmanyuan.jpg", map: "香満園", mapUrl: "https://maps.app.goo.gl/1YHNA34KqQ6H9Sih6", budget: "60〜100元", budgetMin: 60, budgetMax: 100 },
                     { time: "09:30", name: "赤峰街散策", type: "spot", desc: "中山エリアで注目を集める街歩きスポット。古い建物を活かしたセンスあるショップやカフェが並び、短時間でも台北の今らしい空気を感じられます。", img: "images/chifeng_street.jpg", map: "赤峰街" },
                     { time: "11:00", name: "神農生活 (誠品生活南西)", type: "spot", desc: "台湾各地の食品・雑貨・工芸を丁寧に編集した人気セレクト店。品質の高い土産を効率よく選べるため、旅の締めくくりの買い物にも最適な一店です。", img: "images/shinonglife_nanxi.jpg", map: "神農生活 誠品生活南西店", budget: "500元〜（お土産購入次第）", budgetMin: 500, budgetMax: null },
-                    { time: "12:30", name: "ホテルで荷物ピックアップ", type: "hotel", desc: "台北駅から桃園空港MRT（快速）に乗車します。", img: "images/water_meworld.jpg", map: "Water Meworld" },
-                    { time: "15:30", name: "桃園国際空港(TPE) 出発", type: "transport", desc: "お土産と最高の思い出を胸に日本へ帰国します。", img: "images/taoyuan_airport.jpg", map: "桃園国際空港" }
+                    { time: "12:30", name: "ホテルで荷物ピックアップ", type: "hotel", desc: "荷物を回収し、台北駅へ向かいます。", img: "images/water_meworld.jpg", map: "Water Meworld" },
+                    { time: "13:00", name: "台北駅 出発（桃園空港へ）", type: "transport", desc: "帰国に向け、空港線（桃園空港MRT）などで桃園国際空港へ向かう想定です。快速・各停や混雑は当日の状況で調整してください。", map: "台北駅" },
+                    { time: "15:30", name: "桃園国際空港(TPE) 出発", type: "transport", desc: "お土産と最高の思い出を胸に日本へ帰国します。", img: "images/taoyuan_airport.jpg", map: "桃園国際空港" },
+                    { time: "20:00", name: "成田空港 到着（日本帰着）", type: "transport", desc: "日本への到着目安は20:00。帰国便は旅の準備のとおりスクート TR874（予定）。使用ターミナルは当日の案内に従ってください。", map: "成田空港" }
                 ]
             }
         ];
@@ -321,7 +327,7 @@ Water Meworld</td>
             const text = `${spot.name} ${spot.map}`;
             if (spot.type === "hotel") return "🏨";
             if (spot.type === "transport") {
-                if (/(空港|KHH|TPE)/.test(text)) return "✈️";
+                if (/(空港|KHH|TPE|成田|NRT)/.test(text)) return "✈️";
                 if (/(駅|THSR|高鉄|台鉄)/.test(text)) return "🚆";
                 return "🚉";
             }
