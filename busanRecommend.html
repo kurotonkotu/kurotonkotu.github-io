@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>釜山旅行 おすすめスポット＆グルメリスト</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 15mm 12mm;
+            background-color: #faf8f5;
+        }
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #2c3e50;
+            background-color: #faf8f5;
+            font-size: 10pt;
+            line-height: 1.5;
+        }
+        
+        /* ダウンロードバー（印刷時には非表示） */
+        .download-bar {
+            background-color: #2e7d32;
+            color: #ffffff;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .download-btn {
+            background-color: #ffffff;
+            color: #2e7d32;
+            border: none;
+            padding: 6px 16px;
+            margin-left: 10px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .download-btn:hover {
+            background-color: #e8f5e9;
+        }
+
+        @media print {
+            .download-bar {
+                display: none;
+            }
+        }
+
+        .header {
+            margin: 0 -12mm 18px -12mm;
+            padding: 22px 15mm;
+            background-color: #1a5276;
+            color: #ffffff;
+        }
+        .header h1 {
+            margin: 0 0 6px 0;
+            font-size: 18pt;
+            font-weight: bold;
+        }
+        .header p {
+            margin: 0;
+            font-size: 9.5pt;
+            opacity: 0.9;
+        }
+        .container {
+            padding: 0 12mm 20px 12mm;
+        }
+        h2 {
+            font-size: 13pt;
+            color: #1a5276;
+            border-left: 4px solid #d4ac0d;
+            padding-left: 10px;
+            margin-top: 20px;
+            margin-bottom: 12px;
+            page-break-after: avoid;
+        }
+        h3 {
+            font-size: 11pt;
+            color: #2980b9;
+            margin-top: 14px;
+            margin-bottom: 8px;
+            page-break-after: avoid;
+        }
+        .spot-card {
+            background: #ffffff;
+            border: 1px solid #e5e7e9;
+            border-radius: 6px;
+            padding: 10px 14px;
+            margin-bottom: 10px;
+            page-break-inside: avoid;
+        }
+        .spot-header {
+            margin-bottom: 4px;
+        }
+        .spot-title {
+            font-weight: bold;
+            font-size: 10.5pt;
+            color: #1a5276;
+            text-decoration: none;
+        }
+        .spot-title:hover {
+            text-decoration: underline;
+        }
+        .spot-sub {
+            font-size: 8.5pt;
+            color: #7f8c8d;
+            margin-left: 5px;
+        }
+        .spot-desc {
+            margin: 0;
+            font-size: 9pt;
+            color: #4a5568;
+        }
+        .map-link {
+            display: inline-block;
+            margin-top: 4px;
+            font-size: 8.5pt;
+            color: #27ae60;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .map-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="download-bar">
+    📄 最新のHTMLファイルを作成しました 
+    <button class="download-btn" onclick="downloadHTML()">このファイルをHTMLとして保存</button>
+</div>
+
+<div class="header">
+    <h1>釜山旅行 おすすめスポット＆マップリスト</h1>
+    <p>日程：9/16〜9/21 | 各スポットの名称またはリンクをクリックするとGoogleマップが開きます</p>
+</div>
+
+<div class="container">
+    <h2>1. 観光スポット</h2>
+
+    <h3>【絶景＆写真映え】</h3>
+
+    <div class="spot-card">
+        <div class="spot-header">
+            <a href="https://www.google.com/maps/search/?api=1&query=Gamcheon+Culture+Village" class="spot-title" target="_blank">甘川文化村</a>
+            <span class="spot-sub">（Camcheon Culture Village / 감천문화마을）</span>
+        </div>
+        <p class="spot-desc">カラフルな家々が立ち並ぶアートの村。路地裏散策やフォトスポット巡りに最適です。</p>
+        <a href="https://www.google.com/maps/search/?api=1&query=Gamcheon+Culture+Village" class="map-link" target="_blank">📍 Googleマップで開く</a>
+    </div>
+
+    <div class="spot-card">
+        <div class="spot-header">
+            <a href="https://www.google.com/maps/search/?api=1&query=Haeundae+Blueline+Park+Mipo+Station" class="spot-title" target="_blank">海雲台ブルーラインパーク 尾浦停留所</a>
+            <span class="spot-sub">（Haeundae Blueline Park Mipo Station）</span>
+        </div>
+        <p class="spot-desc">スカイカプセルや海岸列車に乗って、海を一望できる大人気アクティビティです。</p>
+        <a href="https://www.google.com/maps/search/?api=1&query=Haeundae+Blueline+Park+Mipo+Station" class="map-link" target="_blank">📍 Googleマップで開く</a>
+    </div>
+
+    <div class="spot-card">
+        <div class="spot-header">
+            <a href="https://www.google.com/maps/search/?api=1&query=Huinnyeoul+Culture+Village" class="spot-title" target="_blank">白浅灘文化村</a>
+            <span class="spot-sub">（Huinnyeoul Culture Village / 흰여울문화마을）</span>
+        </div>
+        <p class="spot-desc">影島の断崖沿いに広がる白と青を基調とした静かな村。海沿いのカフェや夕暮れの景色が魅力です。</p>
+        <a href="https://www.google.com/maps/search/?api=1&query=Huinnyeoul+Culture+Village" class="map-link" target="_blank">📍 Googleマップで開く</a>
+    </div>
+
+    <h3>【夜景＆海辺】</h3>
+
+    <div class="spot-card">
+        <div class="spot-header">
+            <a href="https://www.google.com/maps/search/?api=1&query=Gwangalli+Beach" class="spot-title" target="_blank">広安里海水浴場</a>
+            <span class="spot-sub">（Gwangalli Beach / 광안리해수욕장）</span>
+        </div>
+        <p class="spot-desc">ライトアップされた広安大橋の夜景が美しい定番ビーチエリアです。</p>
+        <a href="https://www.google.com/maps/search/?api=1&query=Gwangalli+Beach" class="map-link" target="_blank">📍 Googleマップで開く</a>
+    </div>
+
+    <div class="spot-card">
+        <div class="spot-header">
+            <a href="https://www.google.com/maps/search/?api=1&query=BUSAN+X+the+SKY" class="spot-title" target="_blank">BUSAN X the SKY</a>
+            <span class="spot-sub">（부산 엑스 더 スカイ）</span>
+        </div>
+        <p class="spot-desc">海雲台にある100階建ての展望台。釜山の海と街並みを360度見渡せます。</p>
+        <a href="https://www.google.com/maps/search/?api=1&query=BUSAN+X+the+SKY" class="map-link" target="_blank">📍 Googleマップで開く</a>
+    </div>
+
+    <h3>【歴史・市場】</h3>
+
+    <div class="spot-card">
+        <div class="spot-header">
+            <a href="https://www.google.com/maps/search/?api=1&query=Haedong+Yonggungsa+Temple" class="spot-title" target="_blank">海東龍宮寺</a>
+            <span class="spot-sub">（Haedong Yonggungsa Temple / 해동용궁사）</span>
+        </div>
+        <p class="spot-desc">海の断崖絶壁に建つ珍しいお寺。波音を聞きながら参拝できます。</p>
+        <a href="https://www.google.com/maps/search/?api=1&query=Haedong+Yonggungsa+Temple" class="map-link" target="_blank">📍 Googleマップで開く</a>
+    </div>
+
+    <div class="spot-card">
+        <div class="spot-header">
+            <a href="https://www.google.com/maps/search/?api=1&query=Jagalchi+Market" class="spot-title" target="_blank">ジャガルチ市場</a>
+            <span class="spot-sub">（Jagalchi Market / 자갈치시장）</span>
+        </div>
+        <p class="spot-desc">韓国最大級の水産市場。港町ならではの活気を楽しめます。</p>
+        <a href="https://www.google.com/maps/search/?api=1&query=Jagalchi+Market" class="map-link" target="_blank">📍 Googleマップで開く</a>
+    </div>
+
+    <h2>2. ローカルフード＆ソウルフード</h2>
+
+    <div class="spot-card">
+        <div class="spot-header">
+            <a href="https://www.google.com/maps/search/?api=1&query=Songjeong+Samdae+Gukbap" class="spot-title" target="_blank">松亭3代クッパ</a>
+            <span class="spot-sub">（デジクッパ - 西面）</span>
+        </div>
+        <p class="spot-desc">あっさりしつつ旨味の強いスープで人気の老舗デジクッパ店。</p>
+        <a href="https://www.google.com/maps/search/?api=1&query=Songjeong+Samdae+Gukbap" class="map-link" target="_blank">📍 Googleマップで開く</a>
+    </div>
+
+    <div class="spot-card">
+        <div class="spot-header">
+            <a href="https://www.google.com/maps/search/?api=1&query=Anmok+Gwangalli" class="spot-title" target="_blank">安木</a>
+            <span class="spot-sub">（デジクッパ - 広安里）</span>
+        </div>
+        <p class="spot-desc">ミシュラン・ビブグルマンに選ばれた、モダンで上品なデジクッパ店。</p>
+        <a href="https://www.google.com/maps/search/?api=1&query=Anmok+Gwangalli" class="map-link" target="_blank">📍 Googleマップで開く</a>
+    </div>
+
+    <div class="spot-card">
+        <div class="spot-header">
+            <a href="https://www.google.com/maps/search/?api=1&query=Choryang+Milmyeon" class="spot-title" target="_blank">草梁ミルミョン</a>
+            <span class="spot-sub">（ミルミョン - 釜山駅前）</span>
+        </div>
+        <p class="spot-desc">出汁の効いたミルミョンと大きな蒸しマンドゥ（餃子）の名店。</p>
+        <a href="https://www.google.com/maps/search/?api=1&query=Choryang+Milmyeon" class="map-link" target="_blank">📍 Googleマップで開く</a>
+    </div>
+
+    <div class="spot-card">
+        <div class="spot-header">
+            <a href="https://www.google.com/maps/search/?api=1&query=Gaemijip+Nampo" class="spot-title" target="_blank">ケミジプ 本店</a>
+            <span class="spot-sub">（ナッコプセ - 南浦洞）</span>
+        </div>
+        <p class="spot-desc">ナッコプセ（タコ・ホルモン・エビの辛炒め鍋）の元祖チェーン。</p>
+        <a href="https://www.google.com/maps/search/?api=1&query=Gaemijip+Nampo" class="map-link" target="_blank">📍 Googleマップで開く</a>
+    </div>
+
+    <div class="spot-card">
+        <div class="spot-header">
+            <a href="https://www.google.com/maps/search/?api=1&query=Goraesa+Eomuk+Haeundae" class="spot-title" target="_blank">古来思オムク 海雲台店</a>
+            <span class="spot-sub">（練り物 - 海雲台）</span>
+        </div>
+        <p class="spot-desc">高級練り物・かまぼこの人気ショップ。店内で温めて食べられます。</p>
+        <a href="https://www.google.com/maps/search/?api=1&query=Goraesa+Eomuk+Haeundae" class="map-link" target="_blank">📍 Googleマップで開く</a>
+    </div>
+
+    <h2>3. 評判の人気レストラン＆ファインダイニング</h2>
+
+    <h3>【高級肉料理・韓牛】</h3>
+
+    <div class="spot-card">
+        <div class="spot-header">
+            <a href="https://www.google.com/maps/search/?api=1&query=Haeundae+Somunnan+Amso+Galbi" class="spot-title" target="_blank">海雲台ソムンナンアムソカルビ</a>
+            <span class="spot-sub">（韓牛焼肉 - 海雲台）</span>
+        </div>
+        <p class="spot-desc">創業1964年の超有名店。極上の韓牛カルビと締めのジャガイモ麺（カムジャサリ）が名物。</p>
+        <a href="https://www.google.com/maps/search/?api=1&query=Haeundae+Somunnan+Amso+Galbi" class="map-link" target="_blank">📍 Googleマップで開く</a>
+    </div>
+
+    <div class="spot-card">
+        <div class="spot-header">
+            <a href="https://www.google.com/maps/search/?api=1&query=Born+and+Bred+Haeundae" class="spot-title" target="_blank">ボーン・アンド・ブレッド 釜山</a>
+            <span class="spot-sub">（プレミアム韓牛おまかせ - 海雲台）</span>
+        </div>
+        <p class="spot-desc">ソウルの最高峰韓牛専門店の釜山店。最高等級の韓牛を最上のコースで提供。</p>
+        <a href="https://www.google.com/maps/search/?api=1&query=Born+and+Bred+Haeundae" class="map-link" target="_blank">📍 Googleマップで開く</a>
+    </div>
+
+    <h3>【海鮮・上質和食アレンジ】</h3>
+
+    <div class="spot-card">
+        <div class="spot-header">
+            <a href="https://www.google.com/maps/search/?api=1&query=Haemok+Haeundae" class="spot-title" target="_blank">ヘモック</a>
+            <span class="spot-sub">（ひつまぶし・海鮮丼 - 海雲台）</span>
+        </div>
+        <p class="spot-desc">ミシュラン・ビブグルマン掲載。極上のひつまぶしと新鮮なカイセンドンが味わえる超人気店。</p>
+        <a href="https://www.google.com/maps/search/?api=1&query=Haemok+Haeundae" class="map-link" target="_blank">📍 Googleマップで開く</a>
+    </div>
+
+    <div class="spot-card">
+        <div class="spot-header">
+            <a href="https://www.google.com/maps/search/?api=1&query=Gijang+Crab+Market" class="spot-title" target="_blank">機張（キジャン）ズワイガニ市場</a>
+            <span class="spot-sub">（カニ料理 - 機張）</span>
+        </div>
+        <p class="spot-desc">水槽から生きたカニを選んで蒸してもらう市場。締めの蟹味噌ご飯が絶品です。</p>
+        <a href="https://www.google.com/maps/search/?api=1&query=Gijang+Crab+Market" class="map-link" target="_blank">📍 Googleマップで開く</a>
+    </div>
+
+    <h3>【ミシュラン星付き・イノベーティブ】</h3>
+
+    <div class="spot-card">
+        <div class="spot-header">
+            <a href="https://www.google.com/maps/search/?api=1&query=Palate+Busan" class="spot-title" target="_blank">Palate（パレット）</a>
+            <span class="spot-sub">（コンテンポラリーフレンチ - 海雲台/月見の丘）</span>
+        </div>
+        <p class="spot-desc">ミシュラン1つ星。地元の旬の食材とモダンフレンチの技術を融合させた独創的コース。</p>
+        <a href="https://www.google.com/maps/search/?api=1&query=Palate+Busan" class="map-link" target="_blank">📍 Googleマップで開く</a>
+    </div>
+
+    <div class="spot-card">
+        <div class="spot-header">
+            <a href="https://www.google.com/maps/search/?api=1&query=Fiotto+Busan" class="spot-title" target="_blank">Fiotto（フィオット）</a>
+            <span class="spot-sub">（イノベーティブイタリアン - 海雲台）</span>
+        </div>
+        <p class="spot-desc">ミシュラン1つ星。自家農園野菜や自家製生パスタを使用するサステナブルな一星レストラン。</p>
+        <a href="https://www.google.com/maps/search/?api=1&query=Fiotto+Busan" class="map-link" target="_blank">📍 Googleマップで開く</a>
+    </div>
+
+    <h2>4. 1人でも入りやすい上質なカウンターバー＆ビストロ</h2>
+
+    <div class="spot-card">
+        <div class="spot-header">
+            <a href="https://www.google.com/maps/search/?api=1&query=Wine+Vin+Gwangalli" class="spot-title" target="_blank">Wine Vin（ワイン・バン）</a>
+            <span class="spot-sub">（ワイン・オマカセ＆ペアリングバー - 広安里）</span>
+        </div>
+        <p class="spot-desc">広安大橋の夜景を望むカウンターで、ソムリエ提案のグラスワインと料理のペアリングを楽しめます。</p>
+        <a href="https://www.google.com/maps/search/?api=1&query=Wine+Vin+Gwangalli" class="map-link" target="_blank">📍 Googleマップで開く</a>
+    </div>
+
+    <div class="spot-card">
+        <div class="spot-header">
+            <a href="https://www.google.com/maps/search/?api=1&query=BAR+MIZU+Jeonpo" class="spot-title" target="_blank">BAR MIZU（バー・ミズ）</a>
+            <span class="spot-sub">（ジャパニーズ・アジアン割烹バー - 西面/田浦）</span>
+        </div>
+        <p class="spot-desc">カウンター中心の隠れ家空間。1人前サイズの創作小皿料理とお酒（日本酒・ワイン等）のペアリングが秀逸。</p>
+        <a href="https://www.google.com/maps/search/?api=1&query=BAR+MIZU+Jeonpo" class="map-link" target="_blank">📍 Googleマップで開く</a>
+    </div>
+
+    <div class="spot-card">
+        <div class="spot-header">
+            <a href="https://www.google.com/maps/search/?api=1&query=NOWAVE+Gwangalli" class="spot-title" target="_blank">NOWAVE（ノウェーブ）</a>
+            <span class="spot-sub">（ソロダイナー・ソロバー - 広安里）</span>
+        </div>
+        <p class="spot-desc">ソロ飲み（혼술）特化の落ち着いたバー。静かにカクテルやウイスキー、軽めのペアリングを楽しみたい時におすすめ。</p>
+        <a href="https://www.google.com/maps/search/?api=1&query=NOWAVE+Gwangalli" class="map-link" target="_blank">📍 Googleマップで開く</a>
+    </div>
+
+    <div class="spot-card">
+        <div class="spot-header">
+            <a href="https://www.google.com/maps/search/?api=1&query=Bao+Haus+Busan" class="spot-title" target="_blank">Bao Haus（バオハウス）</a>
+            <span class="spot-sub">（アジアンビストロ・台湾バオ - 西面/田浦）</span>
+        </div>
+        <p class="spot-desc">ミシュラン・ビブグルマン掲載。オープンカウンターで台湾風割包（バオ）とクラフトビールやハイボールを楽しめる人気店。</p>
+        <a href="https://www.google.com/maps/search/?api=1&query=Bao+Haus+Busan" class="map-link" target="_blank">📍 Googleマップで開く</a>
+    </div>
+</div>
+
+<script>
+    function downloadHTML() {
+        const element = document.createElement('a');
+        const file = new Blob([document.documentElement.outerHTML], {type: 'text/html'});
+        element.href = URL.createObjectURL(file);
+        element.download = 'busan_travel_list.html';
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+    }
+</script>
+
+</body>
+</html>
